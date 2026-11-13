@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>115統測 第二大題 對話選句三關複習</title>
+<style>
+:root{--bg:#eef7f3;--card:#fff;--ink:#23332c;--sub:#5f7a6d;--main:#1f9d6b;--main2:#157a52;--ok:#2e9e5b;--okbg:#dff5e8;--bad:#d64545;--badbg:#fde4e4;--line:#cfe6dc;--soft:#e3f4ec;--key:#fff3bf}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font-family:-apple-system,"Helvetica Neue",Arial,sans-serif;font-size:clamp(16px,4.4vw,19px);line-height:1.5;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+:lang(zh-Hant),.zh{font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei","Heiti TC",sans-serif}
+.en{font-family:-apple-system,"Helvetica Neue",Arial,"Segoe UI",sans-serif}
+#app{max-width:480px;margin:0 auto;padding:12px 14px 40px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.badge{background:var(--main);color:#fff;border-radius:99px;padding:4px 12px;font-weight:700;font-size:15px}
+.timer{font-variant-numeric:tabular-nums;font-weight:700;color:var(--main2);font-size:16px}
+.bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.bar i{display:block;height:100%;background:var(--main);width:0;transition:width .3s}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}
+h1{font-size:1.3em;margin:6px 0 4px}
+h2{font-size:1.1em;margin:0 0 8px}
+p{margin:6px 0}
+.sub{color:var(--sub);font-size:15px}
+button{font:inherit;cursor:pointer}
+.btn{display:block;width:100%;min-height:50px;border:0;border-radius:14px;background:var(--main);color:#fff;font-weight:700;padding:10px 14px;box-shadow:0 4px 0 var(--main2)}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--main2)}
+.btn.ghost{background:#fff;color:var(--main2);border:2px solid var(--main);box-shadow:none}
+.btn.small{min-height:44px;font-size:16px}
+.btn.s2{background:#2f8fd8;box-shadow:0 4px 0 #1f6fae}
+.btn.s3{background:#7a5cc7;box-shadow:0 4px 0 #5a3fa3}
+.btn[disabled]{background:#ddd;box-shadow:none;color:#888;cursor:not-allowed}
+.stg{display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left}
+.stg small{display:block;font-weight:400;opacity:.9;font-size:14px}
+.stg .st{font-size:15px;white-space:nowrap}
+.row{display:flex;gap:8px}.row>*{flex:1}
+input{font:inherit;width:100%;min-height:48px;border:2px solid var(--line);border-radius:12px;padding:8px 12px;background:#fff;color:var(--ink);margin-bottom:6px}
+label{font-weight:700;font-size:15px}
+.menu{min-height:40px;border:2px solid var(--main);background:#fff;color:var(--main2);border-radius:99px;padding:4px 12px;font-weight:700;font-size:15px}
+.speak{display:flex;align-items:center;justify-content:center;gap:10px;margin:6px 0 12px}
+.speak button{width:78px;height:78px;border-radius:50%;border:0;background:var(--main);color:#fff;font-size:34px;box-shadow:0 5px 0 var(--main2)}
+.speak button.slow{width:54px;height:54px;font-size:22px;background:#fff;color:var(--main2);border:2px solid var(--main);box-shadow:none}
+.playing{animation:pulse .6s infinite alternate}
+@keyframes pulse{to{transform:scale(1.1)}}
+.choice{display:block;width:100%;min-height:54px;text-align:left;background:#fff;border:2px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:9px;color:var(--ink);font-weight:600}
+.choice.ok{background:var(--okbg);border-color:var(--ok);animation:pop .35s}
+.choice.bad{background:var(--badbg);border-color:var(--bad);animation:shake .35s;opacity:.7}
+.choice.sel{background:var(--soft);border-color:var(--main)}
+@keyframes pop{50%{transform:scale(1.04)}}
+@keyframes shake{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.cheer{min-height:26px;text-align:center;font-weight:800;color:var(--ok);font-size:1.05em}
+.cheer.bad{color:var(--bad)}
+.opt{display:flex;gap:8px;align-items:stretch;margin-bottom:9px}
+.opt .choice{margin:0;flex:1}
+.opt .sp{flex:none;width:48px;border:2px solid var(--main);background:#fff;border-radius:14px;font-size:20px}
+.opt .zhline{display:block;font-weight:400;color:var(--sub);font-size:15px;margin-top:2px}
+.dlg{margin:6px 0 12px}
+.ln{padding:6px 10px;border-radius:10px;margin-bottom:4px;font-size:.98em}
+.ln b{color:var(--main2)}
+.ln.key{background:var(--key);border-left:5px solid #f0b400;font-weight:600}
+.ln.dim{color:#6f7f77}
+.blank{display:inline-block;min-width:4.5em;border-bottom:2px solid var(--ink);text-align:center;color:var(--main2);font-weight:700}
+.sc{background:#fff;border:3px solid var(--main);border-radius:20px;padding:16px}
+.sc h1{margin:0;text-align:center}
+.sc .who{text-align:center;color:var(--sub);font-size:15px;margin-bottom:10px}
+.sc table{width:100%;border-collapse:collapse;margin:8px 0}
+.sc th,.sc td{padding:9px 6px;border-bottom:1px solid var(--line);text-align:center;font-size:16px}
+.sc th{color:var(--sub);font-size:15px}
+.sc td:first-child,.sc th:first-child{text-align:left}
+.sc .total td{font-weight:800;border-bottom:0;color:var(--main2)}
+.big{font-size:2.2em;font-weight:900;color:var(--main2);text-align:center;line-height:1.1}
+.code{text-align:center;color:var(--sub);font-size:14px;margin-top:6px;letter-spacing:1px}
+.wrong{border-left:5px solid var(--bad);padding:6px 10px;margin:8px 0;background:var(--badbg);border-radius:8px;font-size:15px}
+.hide,.opt .zhline.hide{display:none!important}
+details{background:#fff;border:2px solid var(--line);border-radius:14px;margin-bottom:8px;padding:0 12px}
+summary{min-height:48px;display:flex;align-items:center;font-weight:700;cursor:pointer;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"＋";margin-left:auto;color:var(--main2)}
+details[open] summary::after{content:"－"}
+.ck{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.ck button{flex:none;width:44px;height:44px;border-radius:50%;border:0;background:var(--main);color:#fff;font-size:20px}
+.ck .t{flex:1}.ck .t b{display:block}.ck .t span{color:var(--sub);font-size:15px}
+.ck.ans b::after{content:" ✔";color:var(--ok)}
+.ck.ans{background:var(--okbg);border-radius:10px;padding-left:6px;padding-right:6px}
+.dots{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin:0 0 10px}
+.dot{min-height:44px;border:2px solid var(--line);background:#fff;border-radius:10px;font-weight:700;color:var(--sub);padding:0}
+.dot.done{background:var(--soft);border-color:var(--main);color:var(--main2)}
+.dot.cur{outline:3px solid var(--main);outline-offset:1px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+"use strict";
+/* ============ 資料區(換考題只改這裡) ============ */
+const DATA = {
+  title:"115統測英文 第二大題(對話)",
+  items:[
+ {
+  "n": 11,
+  "topic": "買手機充電器",
+  "lines": [
+   {
+    "sp": "Customer",
+    "t": "Hi, do you sell phone chargers?",
+    "zh": "嗨,你們有賣手機充電器嗎?"
+   },
+   {
+    "sp": "Clerk",
+    "t": "Yes, over there. Take a look, please.",
+    "zh": "有,在那邊,請看看。"
+   },
+   {
+    "sp": "Customer",
+    "t": "Great, I'll take this one. How much is it?",
+    "zh": "太好了,我要這個。多少錢?"
+   },
+   {
+    "sp": "Clerk",
+    "t": "That'll be NT$ 350. ___",
+    "zh": "一共是新台幣350元。___"
+   },
+   {
+    "sp": "Customer",
+    "t": "No, just the charger.",
+    "zh": "不用,只要充電器就好。"
+   },
+   {
+    "sp": "Clerk",
+    "t": "OK, got it.",
+    "zh": "好的,了解。"
+   }
+  ],
+  "opts": [
+   {
+    "en": "Is that all?",
+    "zh": "這樣就好了嗎?"
+   },
+   {
+    "en": "Anything else?",
+    "zh": "還需要別的嗎?"
+   },
+   {
+    "en": "Cash or credit card?",
+    "zh": "付現還是刷卡?"
+   },
+   {
+    "en": "It works well, right?",
+    "zh": "它很好用,對吧?"
+   }
+  ],
+  "ans": 1
+ },
+ {
+  "n": 12,
+  "topic": "演唱會",
+  "lines": [
+   {
+    "sp": "Jane",
+    "t": "Did you go to the BLACKPINK concert?",
+    "zh": "你有去BLACKPINK的演唱會嗎?"
+   },
+   {
+    "sp": "Tom",
+    "t": "Nope. I was busy preparing for a singing competition.",
+    "zh": "沒有。我忙著準備歌唱比賽。"
+   },
+   {
+    "sp": "Jane",
+    "t": "Oh! And did you go to the TWICE concert?",
+    "zh": "喔!那你有去TWICE的演唱會嗎?"
+   },
+   {
+    "sp": "Tom",
+    "t": "___",
+    "zh": "___"
+   },
+   {
+    "sp": "Jane",
+    "t": "Lucky you! You got the tickets! I wish I were there with you.",
+    "zh": "你真幸運!你拿到票了!真希望我也和你一起去。"
+   }
+  ],
+  "opts": [
+   {
+    "en": "They'll never come again.",
+    "zh": "它們再也不會來了。"
+   },
+   {
+    "en": "I went with my classmates.",
+    "zh": "我和同學一起去了。"
+   },
+   {
+    "en": "I'm not a fan of these two groups.",
+    "zh": "我不是這兩個團體的粉絲。"
+   },
+   {
+    "en": "You sang very well with me last time.",
+    "zh": "上次你和我唱得很好。"
+   }
+  ],
+  "ans": 1
+ },
+ {
+  "n": 13,
+  "topic": "買橘子過年",
+  "lines": [
+   {
+    "sp": "Liz",
+    "t": "I'm going to the supermarket to pick up two boxes of mandarin oranges. My mother ordered them for Chinese New Year.",
+    "zh": "我要去超市拿兩箱橘子。我媽媽訂了要給農曆新年用。"
+   },
+   {
+    "sp": "Jay",
+    "t": "___",
+    "zh": "___"
+   },
+   {
+    "sp": "Liz",
+    "t": "They are a symbol of good fortune. We eat them to bring good luck.",
+    "zh": "它們是好運的象徵。我們吃橘子來帶來好運。"
+   }
+  ],
+  "opts": [
+   {
+    "en": "Since when?",
+    "zh": "從什麼時候開始的?"
+   },
+   {
+    "en": "Which supermarket?",
+    "zh": "哪一間超市?"
+   },
+   {
+    "en": "Why mandarin oranges?",
+    "zh": "為什麼要買橘子?"
+   },
+   {
+    "en": "How many mandarin oranges?",
+    "zh": "多少顆橘子?"
+   }
+  ],
+  "ans": 2
+ },
+ {
+  "n": 14,
+  "topic": "學西班牙文",
+  "lines": [
+   {
+    "sp": "Brian",
+    "t": "I heard you're learning Spanish. Is it hard?",
+    "zh": "我聽說你在學西班牙文。很難嗎?"
+   },
+   {
+    "sp": "Lily",
+    "t": "Yes, it is, but I like it.",
+    "zh": "對,很難,但我喜歡。"
+   },
+   {
+    "sp": "Brian",
+    "t": "You're already 30. ___",
+    "zh": "你已經30歲了。___"
+   },
+   {
+    "sp": "Lily",
+    "t": "No, not at all. Age is not a big deal.",
+    "zh": "不會,一點也不會。年齡不是大問題。"
+   }
+  ],
+  "opts": [
+   {
+    "en": "How would you deal with it anyway?",
+    "zh": "你到底要怎麼處理它?"
+   },
+   {
+    "en": "Isn't Spanish your favorite language?",
+    "zh": "西班牙文不是你最喜歡的語言嗎?"
+   },
+   {
+    "en": "When did you start learning Spanish?",
+    "zh": "你什麼時候開始學西班牙文?"
+   },
+   {
+    "en": "Isn't it too late to learn a new language?",
+    "zh": "學新語言不會太晚了嗎?"
+   }
+  ],
+  "ans": 3
+ },
+ {
+  "n": 15,
+  "topic": "曬過的瓶裝水",
+  "lines": [
+   {
+    "sp": "Peter",
+    "t": "Gosh. I left my bottled water on my bike.",
+    "zh": "天啊。我把瓶裝水放在腳踏車上了。"
+   },
+   {
+    "sp": "Rose",
+    "t": "For the whole afternoon? Then don't drink it. It's hot outside. The sun may have heated it up.",
+    "zh": "整個下午嗎?那就別喝了。外面很熱,太陽可能把水曬熱了。"
+   },
+   {
+    "sp": "Peter",
+    "t": "___",
+    "zh": "___"
+   },
+   {
+    "sp": "Rose",
+    "t": "Chemicals from plastics may have got into the water. It's not good for your health.",
+    "zh": "塑膠裡的化學物質可能跑進水裡了。這對健康不好。"
+   },
+   {
+    "sp": "Peter",
+    "t": "I didn't know that!",
+    "zh": "我不知道這件事!"
+   }
+  ],
+  "opts": [
+   {
+    "en": "What's wrong with that?",
+    "zh": "這有什麼問題嗎?"
+   },
+   {
+    "en": "Where did I leave my bike?",
+    "zh": "我把腳踏車留在哪了?"
+   },
+   {
+    "en": "When's the sun going down?",
+    "zh": "太陽什麼時候下山?"
+   },
+   {
+    "en": "Why did you bring that with you?",
+    "zh": "你為什麼帶著那個?"
+   }
+  ],
+  "ans": 0
+ },
+ {
+  "n": 16,
+  "topic": "接小孩與晚餐",
+  "lines": [
+   {
+    "sp": "Mrs. Wu",
+    "t": "I'm going shopping. Would you mind picking up Jimmy at the sports center?",
+    "zh": "我要去購物。你可以去運動中心接吉米嗎?"
+   },
+   {
+    "sp": "Mr. Wu",
+    "t": "I'd like to, but I'll have an online meeting soon.",
+    "zh": "我想去,但我馬上有線上會議。"
+   },
+   {
+    "sp": "Mrs. Wu",
+    "t": "We're out of food for dinner. There's nothing left in the fridge.",
+    "zh": "我們晚餐的食物沒了,冰箱裡什麼都沒有。"
+   },
+   {
+    "sp": "Mr. Wu",
+    "t": "___",
+    "zh": "___"
+   },
+   {
+    "sp": "Mrs. Wu",
+    "t": "Great! You go book the restaurant now and I'll get Jimmy.",
+    "zh": "太好了!你現在去訂餐廳,我去接吉米。"
+   }
+  ],
+  "opts": [
+   {
+    "en": "Are you interested in sports?",
+    "zh": "你對運動有興趣嗎?"
+   },
+   {
+    "en": "Can I go shopping right now?",
+    "zh": "我現在可以去購物嗎?"
+   },
+   {
+    "en": "Then we can eat out tonight.",
+    "zh": "那我們今晚可以外食。"
+   },
+   {
+    "en": "Let's do online meeting together.",
+    "zh": "我們一起開線上會議吧。"
+   }
+  ],
+  "ans": 2
+ },
+ {
+  "n": 17,
+  "topic": "技能競賽",
+  "lines": [
+   {
+    "sp": "Ming",
+    "t": "Did you know the skills contest in Taipei last year?",
+    "zh": "你知道去年在台北的技能競賽嗎?"
+   },
+   {
+    "sp": "A-Mei",
+    "t": "The Asian Skills Competition at Nangang Exhibition Center?",
+    "zh": "是在南港展覽館的亞洲技能競賽嗎?"
+   },
+   {
+    "sp": "Ming",
+    "t": "Yes. I was there. It was very impressive. The Taiwan team did a good job!",
+    "zh": "對。我在現場,很令人印象深刻。台灣隊表現很好!"
+   },
+   {
+    "sp": "A-Mei",
+    "t": "___",
+    "zh": "___"
+   },
+   {
+    "sp": "Ming",
+    "t": "Twenty-two in total. We won the team title; we were the best in Asia!",
+    "zh": "總共二十二面。我們贏得團體冠軍,是亞洲第一!"
+   }
+  ],
+  "opts": [
+   {
+    "en": "Did we get any gold medals?",
+    "zh": "我們有拿到金牌嗎?"
+   },
+   {
+    "en": "Did you go there by the Blue 22 bus?",
+    "zh": "你搭藍22公車去那裡嗎?"
+   },
+   {
+    "en": "Did you know anything about Car Painting?",
+    "zh": "你知道汽車塗裝嗎?"
+   },
+   {
+    "en": "Did we also enter the competition two years ago?",
+    "zh": "我們兩年前也參賽了嗎?"
+   }
+  ],
+  "ans": 0
+ },
+ {
+  "n": 18,
+  "topic": "寫履歷",
+  "lines": [
+   {
+    "sp": "Ann",
+    "t": "Hey, I'm writing my resume. What should I put first?",
+    "zh": "嘿,我在寫履歷。第一個該放什麼?"
+   },
+   {
+    "sp": "Ben",
+    "t": "You can list your education first.",
+    "zh": "你可以先列出學歷。"
+   },
+   {
+    "sp": "Ann",
+    "t": "What's next? ___",
+    "zh": "接下來呢?___"
+   },
+   {
+    "sp": "Ben",
+    "t": "Yes. My advice is that you list your past jobs going backwards in time, from your last job to your first job.",
+    "zh": "對。我的建議是依時間倒著列出過去的工作,從最後一份到第一份。"
+   }
+  ],
+  "opts": [
+   {
+    "en": "Your job plan?",
+    "zh": "你的工作計畫?"
+   },
+   {
+    "en": "My work experience?",
+    "zh": "我的工作經驗?"
+   },
+   {
+    "en": "When to start working?",
+    "zh": "何時開始工作?"
+   },
+   {
+    "en": "Why applying for this job?",
+    "zh": "為什麼應徵這份工作?"
+   }
+  ],
+  "ans": 1
+ },
+ {
+  "n": 19,
+  "topic": "更新駕照",
+  "lines": [
+   {
+    "sp": "Dave",
+    "t": "Grandma, you need to renew your driver's license if you want to keep driving.",
+    "zh": "奶奶,如果妳想繼續開車,就需要換發駕照。"
+   },
+   {
+    "sp": "Grandma",
+    "t": "But I'm just 71. I thought only people over 75 had to do it.",
+    "zh": "但我才71歲。我以為只有75歲以上的人才需要。"
+   },
+   {
+    "sp": "Dave",
+    "t": "Not anymore. The new rules say people have to renew their licenses at 70 now.",
+    "zh": "現在不是了。新規定是現在70歲就要換發駕照。"
+   },
+   {
+    "sp": "Grandma",
+    "t": "That won't be a problem. I'm very healthy. ___",
+    "zh": "那不會是問題。我很健康。___"
+   },
+   {
+    "sp": "Dave",
+    "t": "I totally agree, Grandma. I believe I'll still get rides from you.",
+    "zh": "奶奶,我完全同意。我相信我還是可以搭妳的車。"
+   }
+  ],
+  "opts": [
+   {
+    "en": "Maybe I should sell my car right now.",
+    "zh": "也許我現在該賣掉我的車。"
+   },
+   {
+    "en": "Maybe it's time for me to stop driving.",
+    "zh": "也許我該停止開車了。"
+   },
+   {
+    "en": "I'm sure I can get my license renewed.",
+    "zh": "我確定我能換發駕照。"
+   },
+   {
+    "en": "I'll wait until I turn 70 to renew my license.",
+    "zh": "我要等到70歲才換發駕照。"
+   }
+  ],
+  "ans": 2
+ },
+ {
+  "n": 20,
+  "topic": "珍古德博士",
+  "lines": [
+   {
+    "sp": "Willy",
+    "t": "Did you hear that Dr. Jane Goodall (珍古德博士) passed away last year?",
+    "zh": "你聽說珍古德博士去年過世了嗎?"
+   },
+   {
+    "sp": "Joan",
+    "t": "It's so sad. She spent her whole life studying chimpanzees in Africa.",
+    "zh": "真令人難過。她一生都在非洲研究黑猩猩。"
+   },
+   {
+    "sp": "Willy",
+    "t": "Yes. ___ So now we know better how chimpanzees behave in the wild.",
+    "zh": "對。___所以現在我們更了解黑猩猩在野外的行為。"
+   }
+  ],
+  "opts": [
+   {
+    "en": "She put a lot of effort into protecting the oceans.",
+    "zh": "她投入大量心力保護海洋。"
+   },
+   {
+    "en": "She really helped people understand these animals.",
+    "zh": "她真的幫助人們了解這些動物。"
+   },
+   {
+    "en": "She gave so much love to the poor children in Africa.",
+    "zh": "她對非洲貧困兒童付出很多愛。"
+   },
+   {
+    "en": "She truly encouraged people to take care of stray cats.",
+    "zh": "她真的鼓勵人們照顧流浪貓。"
+   }
+  ],
+  "ans": 1
+ }
+]
+};
+const STAGE_NAMES=["第1關 聽英選中文","第2關 對話選句","第3關 驗收(原題)"];
+const IDLE_LIMIT=45;
+
+/* ============ 工具 ============ */
+const $=s=>document.querySelector(s);
+const app=$("#app");
+const LS={get(k){try{return localStorage.getItem(k);}catch(e){return null;}},set(k,v){try{localStorage.setItem(k,v);}catch(e){}}};
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function esc(s){return s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
+function mmss(s){s=Math.round(s);return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");}
+const L=["A","B","C","D"];
+const BLANK_HTML='<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>';
+
+/* ============ 聲音 ============ */
+let voice=null;
+function pickVoice(){if(!("speechSynthesis" in window))return;const vs=speechSynthesis.getVoices();voice=vs.find(v=>/en[-_]US/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null;}
+if("speechSynthesis" in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice;}
+function speak(text,rate,btn){
+  if(!("speechSynthesis" in window))return;
+  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang="en-US";if(voice)u.voice=voice;u.rate=rate||.9;
+    if(btn){btn.classList.add("playing");u.onend=u.onerror=()=>btn.classList.remove("playing");}
+    speechSynthesis.speak(u);}catch(e){}
+}
+let actx=null;
+function beep(ok){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain();o.connect(g);g.connect(actx.destination);o.type="sine";const t=actx.currentTime;
+  if(ok){o.frequency.setValueAtTime(660,t);o.frequency.setValueAtTime(880,t+.1);}else{o.frequency.setValueAtTime(220,t);}
+  g.gain.setValueAtTime(.15,t);g.gain.exponentialRampToValueAtTime(.001,t+.3);o.start(t);o.stop(t+.3);}catch(e){}}
+const GOOD=["Great!","Nice job!","Awesome!","Perfect!","You got it!"];
+const TRY=["Try again!","Almost!","Listen again!"];
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+
+/* ============ 狀態與有效使用時間 ============ */
+const S={who:{cls:"",seat:"",name:""},stage:0,idx:0,time:[0,0,0],s1:[],s2:[],s3:[],lastAct:Date.now(),res:{1:null,2:null,3:null}};
+function touch(){S.lastAct=Date.now();}
+["pointerdown","keydown","touchstart"].forEach(e=>document.addEventListener(e,touch,{passive:true}));
+setInterval(()=>{
+  if(S.stage<1||S.stage>3)return;
+  if(document.visibilityState!=="visible")return;
+  if((Date.now()-S.lastAct)/1000>IDLE_LIMIT)return;
+  S.time[S.stage-1]++;
+  const el=$("#tm");if(el)el.textContent="⏱ "+mmss(S.time[S.stage-1]);
+},1000);
+function header(stage,i,total){
+  return `<div class="top"><button class="menu zh" id="menu">☰ 主選單</button><span class="badge zh">${STAGE_NAMES[stage-1]}</span><span class="timer" id="tm">⏱ ${mmss(S.time[stage-1])}</span></div><div class="bar"><i style="width:${Math.round(i/total*100)}%"></i></div>`;
+}
+document.addEventListener("click",e=>{
+  if(e.target&&e.target.id==="menu"){
+    if(confirm("要中斷這一關、回到主選單嗎?\n這一關目前的作答不會保留。")){try{speechSynthesis.cancel();}catch(_){}S.stage=0;viewHome();}
+  }
+});
+
+/* ============ 主選單 ============ */
+function statusText(k){const r=S.res[k];return r?`${r.score}/${r.total} · ${mmss(r.time)}`:"尚未完成";}
+function readWho(){const c=$("#f_cls");if(!c)return;S.who={cls:c.value.trim(),seat:$("#f_seat").value.trim(),name:$("#f_name").value.trim()};LS.set("cr_who2",JSON.stringify(S.who));}
+function needWho(){readWho();if(!S.who.cls||!S.who.seat||!S.who.name){alert("請先填班級、座號、姓名");return false;}return true;}
+function viewHome(){
+  S.stage=0;try{speechSynthesis.cancel();}catch(e){}
+  if(!S.who.name){const sv=JSON.parse(LS.get("cr_who2")||LS.get("cr_who")||"{}");S.who={cls:sv.cls||"",seat:sv.seat||"",name:sv.name||""};}
+  const doneAny=[1,2,3].some(k=>S.res[k]);
+  app.innerHTML=`
+  <h1 class="zh" style="margin-top:0">💬 統測第二大題 對話三關</h1>
+  <div class="card zh" style="padding:12px">
+    <div class="row"><div><label>班級</label><input id="f_cls" value="${esc(S.who.cls)}" placeholder="烘二甲" autocomplete="off"></div>
+    <div style="flex:.6"><label>座號</label><input id="f_seat" value="${esc(S.who.seat)}" inputmode="numeric" placeholder="7" autocomplete="off"></div></div>
+    <label>姓名(或綽號)</label><input id="f_name" value="${esc(S.who.name)}" placeholder="小明" autocomplete="off" style="margin-bottom:0">
+  </div>
+  <button class="btn ghost stg zh" id="gr" style="margin-bottom:12px"><span>🔖 重點句子複習<small>10 組對話、40 個選項句</small></span><span class="st">進入 ➜</span></button>
+  <button class="btn stg zh" id="g1" style="margin-bottom:10px"><span>第1關 聽英選中文</span><span class="st">${statusText(1)}</span></button>
+  <button class="btn stg s2 zh" id="g2" style="margin-bottom:10px"><span>第2關 對話選句<small>看前後關鍵句,選最適合的</small></span><span class="st">${statusText(2)}</span></button>
+  <button class="btn stg s3 zh" id="g3" style="margin-bottom:12px"><span>第3關 驗收(原題)</span><span class="st">${statusText(3)}</span></button>
+  <button class="btn ghost zh" id="gc">📋 成績單${doneAny?"":"(尚無成績)"}</button>`;
+  $("#g1").onclick=()=>{if(needWho())pickRound();};
+  $("#g2").onclick=()=>{if(needWho())startStage2();};
+  $("#g3").onclick=()=>{if(needWho())startStage3();};
+  $("#gc").onclick=()=>{if(needWho())viewResult();};
+  $("#gr").onclick=()=>{readWho();viewReview();};
+  window.scrollTo(0,0);
+}
+
+/* ============ 重點句子複習(每組對話收合) ============ */
+function viewReview(){
+  S.stage=0;
+  app.innerHTML=`
+  <div class="top"><button class="menu zh" id="back">⬅ 主選單</button><span class="badge zh">🔖 重點句子複習</span></div>
+  <p class="sub zh" style="margin:0 0 8px">點開一組對話,聽 4 個選項句。✔ 是這題的答案。</p>
+  <div id="dl"></div>
+  <button class="btn zh" id="back2">回主選單</button>`;
+  $("#dl").innerHTML=DATA.items.map(it=>`<details data-n="${it.n}"><summary class="zh">第${it.n}題 · ${esc(it.topic)}</summary>
+    ${it.opts.map((o,i)=>`<div class="ck ${i===it.ans?"ans":""}"><button data-n="${it.n}" data-i="${i}" aria-label="播放">🔊</button><div class="t"><b class="en" lang="en">${esc(o.en)}</b><span class="zh">${esc(o.zh)}</span></div></div>`).join("")}
+  </details>`).join("");
+  document.querySelectorAll(".ck button").forEach(b=>b.onclick=()=>speak(DATA.items[+b.dataset.n-11].opts[+b.dataset.i].en,.85,b));
+  document.querySelectorAll("details").forEach(d=>d.addEventListener("toggle",()=>{if(d.open)document.querySelectorAll("details").forEach(x=>{if(x!==d)x.open=false;});}));
+  $("#back").onclick=$("#back2").onclick=viewHome;
+  window.scrollTo(0,0);
+}
+
+/* ============ 一關結束 ============ */
+function finishStage(k,score,total,extra){
+  S.res[k]=Object.assign({score,total,time:S.time[k-1]},extra||{});S.stage=0;
+  const msgs={1:"聽力句子 OK!",2:"對話選句完成!",3:"驗收完成!"};
+  app.innerHTML=`<h1 class="zh" style="text-align:center">🎉 ${msgs[k]}</h1>
+   <div class="card zh" style="text-align:center"><p>${STAGE_NAMES[k-1]}</p>
+     <div class="big">${score}<span style="font-size:.4em"> / ${total}</span></div>
+     <p class="sub">${k===3?"答對題數":"第一次就選對的題數"} · 用時 ${mmss(S.time[k-1])}</p></div>
+   <button class="btn zh" id="r1" style="margin-bottom:10px">📋 看成績單</button>
+   <div class="row"><button class="btn ghost zh" id="r2">回主選單</button><button class="btn ghost zh" id="r3">再玩這一關</button></div>`;
+  $("#r1").onclick=viewResult;$("#r2").onclick=viewHome;
+  $("#r3").onclick=()=>[0,pickRound,startStage2,startStage3][k]();
+  window.scrollTo(0,0);
+}
+
+/* ============ 第1關:聽英文句子選中文 ============ */
+let q1=[];
+function pickRound(){
+  app.innerHTML=`<div class="top"><button class="menu zh" id="back">⬅ 主選單</button><span class="badge zh">${STAGE_NAMES[0]}</span></div>
+  <div class="card zh"><h2>要練幾題?</h2><p class="sub">聽到英文句子,選出正確的中文意思。</p></div>
+  <button class="btn zh" id="n10" style="margin-bottom:10px">快速 10 題<small style="display:block;font-weight:400">每組對話抽 1 句</small></button>
+  <button class="btn s2 zh" id="n40">完整 40 題<small style="display:block;font-weight:400">全部選項句</small></button>`;
+  $("#back").onclick=viewHome;
+  $("#n10").onclick=()=>startStage1(10);$("#n40").onclick=()=>startStage1(40);
+}
+function startStage1(n){
+  const all=[];DATA.items.forEach(it=>it.opts.forEach((o,i)=>all.push({n:it.n,i,en:o.en,zh:o.zh})));
+  if(n===10){q1=shuffle(DATA.items.map(it=>all.filter(a=>a.n===it.n)).map(g=>pick(g)));}else{q1=shuffle(all);}
+  S.stage=1;S.idx=0;S.time[0]=0;S.s1=[];touch();renderQ1();
+}
+function renderQ1(){
+  const it=q1[S.idx],N=q1.length;
+  const others=shuffle(DATA.items.flatMap(d=>d.opts).filter(o=>o.zh!==it.zh)).slice(0,3).map(o=>o.zh);
+  const opts=shuffle([it.zh,...others]);
+  let first=true,done=false,showEn=false;
+  app.innerHTML=header(1,S.idx,N)+`
+   <div class="card">
+     <p class="zh sub">第 ${S.idx+1} / ${N} 題 · 聽一聽,選出中文意思</p>
+     <div class="speak"><button id="pl" aria-label="播放">🔊</button><button class="slow" id="sl" aria-label="慢速播放">🐢</button></div>
+     <div id="en" class="en hide" style="text-align:center;background:var(--soft);border-radius:12px;padding:8px 12px;margin-bottom:8px;font-weight:700"></div>
+     <div class="cheer zh" id="ch"></div>
+     <div id="opts"></div>
+     <div class="row"><button class="btn ghost small zh" id="seeEn">看英文</button><button class="btn small zh hide" id="nx">下一題 ➜</button></div>
+   </div>`;
+  const play=()=>speak(it.en,.85,$("#pl"));
+  $("#pl").onclick=play;$("#sl").onclick=()=>speak(it.en,.55,$("#sl"));
+  $("#seeEn").onclick=()=>{showEn=true;$("#en").textContent=it.en;$("#en").classList.remove("hide");};
+  $("#opts").innerHTML=opts.map((o,i)=>`<button class="choice zh" data-i="${i}">${esc(o)}</button>`).join("");
+  document.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{
+    if(done)return;
+    if(opts[+b.dataset.i]===it.zh){
+      done=true;b.classList.add("ok");beep(true);
+      $("#ch").className="cheer";$("#ch").textContent=pick(GOOD);
+      $("#en").textContent=it.en;$("#en").classList.remove("hide");$("#seeEn").classList.add("hide");
+      S.s1.push({first,seeEn:showEn});$("#nx").classList.remove("hide");setTimeout(play,250);
+    }else{first=false;b.classList.add("bad");b.disabled=true;beep(false);$("#ch").className="cheer bad";$("#ch").textContent=pick(TRY);}
+  });
+  $("#nx").onclick=()=>{S.idx++;if(S.idx>=N)finishStage(1,S.s1.filter(x=>x.first).length,N,{see:S.s1.filter(x=>x.seeEn).length});else renderQ1();};
+  setTimeout(play,350);
+}
+
+/* ============ 第2關:看對話(前後關鍵句標示)選句子 ============ */
+let order2=[];
+function blankIndex(it){return it.lines.findIndex(l=>l.t.includes("___"));}
+function dialogueHTML(it,mark,showZh){
+  const b=blankIndex(it);
+  return `<div class="dlg en" lang="en">`+it.lines.map((l,i)=>{
+    const cls=mark?(Math.abs(i-b)===1?"key":(i===b?"":"dim")):"";
+    return `<div class="ln ${cls}"><b>${esc(l.sp)}:</b> ${esc(l.t).replace("___",BLANK_HTML)}${showZh?`<div class="zh sub" style="margin-top:2px">${esc(l.zh).replace("___",BLANK_HTML)}</div>`:""}</div>`;
+  }).join("")+`</div>`;
+}
+function startStage2(){S.stage=2;S.idx=0;S.time[1]=0;S.s2=[];order2=shuffle(DATA.items.map((_,i)=>i));touch();renderQ2();}
+function renderQ2(){
+  const it=DATA.items[order2[S.idx]];
+  let first=true,done=false;
+  app.innerHTML=header(2,S.idx,10)+`
+   <div class="card">
+     <p class="zh sub">第 ${S.idx+1} / 10 題 · 黃色是空格前後的關鍵句</p>
+     <div id="dlgbox">${dialogueHTML(it,true,false)}</div>
+     <div class="cheer zh" id="ch"></div>
+     <div id="opts"></div>
+     <div class="row"><button class="btn ghost small zh" id="seeZh">看題目中文</button><button class="btn small zh hide" id="nx">下一題 ➜</button></div>
+   </div>`;
+  let zhShown=false;let dlgZh=false;
+  const draw=()=>{
+    $("#opts").innerHTML=it.opts.map((o,i)=>`<div class="opt"><button class="sp" data-s="${i}" aria-label="播放">🔊</button><button class="choice en" data-i="${i}" lang="en">(${L[i]}) ${esc(o.en)}<span class="zhline zh ${zhShown?"":"hide"}">${esc(o.zh)}</span></button></div>`).join("");
+    document.querySelectorAll(".sp").forEach(b=>b.onclick=()=>speak(it.opts[+b.dataset.s].en,.85,b));
+    document.querySelectorAll(".choice").forEach(b=>b.onclick=()=>choose(+b.dataset.i,b));
+  };
+  const marked={};
+  function choose(i,b){
+    if(done)return;
+    if(i===it.ans){
+      done=true;beep(true);zhShown=true;draw();
+      document.querySelectorAll(".choice").forEach(x=>{const k=+x.dataset.i;if(k===it.ans)x.classList.add("ok");else if(marked[k])x.classList.add("bad");});
+      $("#ch").className="cheer";$("#ch").textContent=pick(GOOD);
+      $("#seeZh").classList.add("hide");$("#nx").classList.remove("hide");
+      S.s2.push({n:it.n,first,seeZh:zhEverShown});
+      speak(it.opts[i].en,.85);
+    }else{
+      first=false;marked[i]=true;b.classList.add("bad");b.disabled=true;beep(false);$("#ch").className="cheer bad";$("#ch").textContent=pick(TRY);
+    }
+  }
+  let zhEverShown=false;
+  $("#seeZh").onclick=()=>{zhEverShown=true;dlgZh=!dlgZh;$("#dlgbox").innerHTML=dialogueHTML(it,true,dlgZh);$("#seeZh").textContent=dlgZh?"隱藏題目中文":"看題目中文";};
+  draw();
+  $("#nx").onclick=()=>{S.idx++;if(S.idx>=10)finishStage(2,S.s2.filter(x=>x.first).length,10,{seeZh:S.s2.filter(x=>x.seeZh).length});else renderQ2();};
+}
+
+/* ============ 第3關 驗收:原題、無提示、可上一題/下一題、交卷後才看對錯 ============ */
+function startStage3(){S.stage=3;S.idx=0;S.time[2]=0;S.s3=[];S.ans3=Array(10).fill(null);touch();renderQ3();}
+function submit3(){
+  const un=S.ans3.filter(a=>a===null).length;
+  if(un&&!confirm(`還有 ${un} 題沒作答,確定要交卷嗎?`))return;
+  S.s3=DATA.items.map((it,i)=>({n:it.n,pick:S.ans3[i],ok:S.ans3[i]===it.ans}));
+  finishStage(3,S.s3.filter(x=>x.ok).length,10,{list:S.s3.slice()});
+}
+function renderQ3(){
+  const it=DATA.items[S.idx],last=S.idx===9;
+  const answered=S.ans3.filter(a=>a!==null).length;
+  app.innerHTML=header(3,answered,10)+`
+   <div class="dots">${S.ans3.map((a,i)=>`<button class="dot ${a!==null?"done":""} ${i===S.idx?"cur":""}" data-d="${i}" aria-label="第${i+1}題">${i+1}</button>`).join("")}</div>
+   <div class="card en">
+     <p class="zh sub">第 ${S.idx+1} / 10 題(可按上一題/下一題檢查)</p>
+     <div class="en" lang="en" style="font-weight:700;margin-bottom:6px">${it.n}.</div>
+     ${dialogueHTML(it,false)}
+     <div id="opts">${it.opts.map((o,i)=>`<button class="choice en ${S.ans3[S.idx]===i?"sel":""}" lang="en" data-i="${i}">(${L[i]}) ${esc(o.en)}</button>`).join("")}</div>
+   </div>
+   <div class="row"><button class="btn ghost small zh" id="pv" ${S.idx===0?"disabled":""}>⬅ 上一題</button>
+   ${last?`<button class="btn small zh" id="sb">交卷 ✔</button>`:`<button class="btn small zh" id="nx3">下一題 ➜</button>`}</div>
+   ${last?"":`<button class="btn ghost small zh" id="sb2" style="margin-top:10px">全部作答完了,交卷</button>`}`;
+  document.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{S.ans3[S.idx]=+b.dataset.i;renderQ3();});
+  document.querySelectorAll(".dot").forEach(b=>b.onclick=()=>{S.idx=+b.dataset.d;renderQ3();});
+  $("#pv").onclick=()=>{if(S.idx>0){S.idx--;renderQ3();}};
+  if($("#nx3"))$("#nx3").onclick=()=>{S.idx++;renderQ3();};
+  if($("#sb"))$("#sb").onclick=submit3;
+  if($("#sb2"))$("#sb2").onclick=submit3;
+}
+
+/* ============ 成績單 ============ */
+function checkCode(str){let h=7;for(const c of str)h=(h*31+c.charCodeAt(0))>>>0;return h.toString(36).toUpperCase().padStart(6,"0").slice(-6);}
+function viewResult(){
+  S.stage=0;
+  const R=S.res,f=k=>R[k]?`${R[k].score}/${R[k].total}`:"—",t=k=>R[k]?mmss(R[k].time):"—";
+  const total=[1,2,3].reduce((a,k)=>a+(R[k]?R[k].time:0),0);
+  const d=new Date();
+  const date=`${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
+  const code=checkCode([S.who.cls,S.who.seat,S.who.name,f(1),f(2),f(3),[1,2,3].map(t).join("-")].join("|"));
+  const r3=R[3],wrong=r3?r3.list.filter(x=>!x.ok):[];
+  const big=r3?`<div class="big">${r3.score*2}<span style="font-size:.4em"> / 20</span></div><div class="sub" style="text-align:center">第3關驗收(每題2分)</div>`:`<div class="sub" style="text-align:center;margin:10px 0">第3關驗收尚未完成</div>`;
+  const notes=[R[1]?`第1關看英文 ${R[1].see} 題`:"",R[2]?`第2關看題目中文 ${R[2].seeZh} 題`:""].filter(Boolean).join(" · ");
+  app.innerHTML=`
+  <div class="sc zh" id="card">
+    <h1>📋 對話三關成績單</h1>
+    <div class="who">${esc(S.who.cls)} ${esc(S.who.seat)}號 ${esc(S.who.name)}<br>${date}</div>
+    ${big}
+    <table>
+      <tr><th>關卡</th><th>用時</th><th>成績</th></tr>
+      <tr><td>1 聽英選中文</td><td>${t(1)}</td><td>${f(1)}</td></tr>
+      <tr><td>2 對話選句</td><td>${t(2)}</td><td>${f(2)}</td></tr>
+      <tr><td>3 驗收(原題)</td><td>${t(3)}</td><td>${f(3)}</td></tr>
+      <tr class="total"><td>總用時</td><td>${mmss(total)}</td><td></td></tr>
+    </table>
+    ${notes?`<p class="sub" style="margin:4px 0">${notes}</p>`:""}
+    <div class="code">驗證碼 ${code}</div>
+  </div>
+  <p class="sub zh" style="text-align:center;margin:10px 0">📸 請把上面的成績單截圖傳給老師</p>
+  ${r3?`<div class="card zh"><h2>第3關訂正</h2>${wrong.length?wrong.map(w=>{const it=DATA.items[w.n-11];return `<div class="wrong"><b>第${w.n}題</b> ${w.pick===null?"(未作答)":`你選 ${L[w.pick]}:<span class="en">${esc(it.opts[w.pick].en)}</span>(${esc(it.opts[w.pick].zh)})`}<br>答案 <b>${L[it.ans]}</b>:<span class="en">${esc(it.opts[it.ans].en)}</span><br>${esc(it.opts[it.ans].zh)}</div>`;}).join(""):`<p>🎉 全部答對!</p>`}</div>`:""}
+  <div class="row"><button class="btn ghost zh" id="cp">複製成績文字</button><button class="btn zh" id="home">回主選單</button></div>`;
+  $("#home").onclick=viewHome;
+  $("#cp").onclick=()=>{
+    const tx=`${S.who.cls} ${S.who.seat}號 ${S.who.name}\n第1關 ${t(1)} ${f(1)}\n第2關 ${t(2)} ${f(2)}\n第3關 ${t(3)} ${f(3)}${r3?`(${r3.score*2}/20)`:""}\n總用時 ${mmss(total)}\n驗證碼 ${code}`;
+    try{navigator.clipboard.writeText(tx).then(()=>{$("#cp").textContent="已複製 ✔";}).catch(()=>{prompt("請手動複製",tx);});}catch(e){prompt("請手動複製",tx);}
+  };
+  window.scrollTo(0,0);
+}
+viewHome();
+</script>
+</body>
+</html>
